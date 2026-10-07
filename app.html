@@ -40,6 +40,8 @@ input:focus{border-color:var(--pink)}
 .card:hover{box-shadow:0 10px 26px rgba(214,51,108,.14);transform:translateY(-2px)}
 .card.soon{opacity:.72;cursor:default}
 .card .ic{font-size:34px;margin-bottom:8px}
+.card .cov{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;margin-bottom:10px;background:#f6ece2;display:block}
+.rcov{width:100%;max-width:420px;border-radius:16px;margin:0 auto 18px;display:block;box-shadow:0 10px 30px rgba(214,51,108,.16)}
 .card .t{font-weight:700;font-size:14.5px;color:var(--ink);line-height:1.3}
 .card .cta{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--pink)}
 .card .badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;color:var(--gold);background:#fff6e2;padding:3px 9px;border-radius:999px}
@@ -146,9 +148,12 @@ function renderList(q){
     html+='<div class="catname">'+ic+' '+cat+' <span style="color:var(--muted);font-weight:600;font-size:13px">('+cats[cat].length+')</span></div><div class="grid">';
     cats[cat].forEach(p=>{
       const ready=p.status==='done';
+      const vis=p.cover_url
+        ? '<img class="cov" src="'+p.cover_url+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><div class="ic" style="display:none">'+p.icon+'</div>'
+        : '<div class="ic">'+p.icon+'</div>';
       html+= ready
-        ? '<div class="card" data-slug="'+p.slug+'"><div class="ic">'+p.icon+'</div><div class="t">'+p.title+'</div><div class="cta">Abrir padrão ›</div></div>'
-        : '<div class="card soon"><span class="badge">em tradução</span><div class="ic">'+p.icon+'</div><div class="t">'+p.title+'</div><div class="cta" style="color:var(--muted)">Chegando em breve</div></div>';
+        ? '<div class="card" data-slug="'+p.slug+'">'+vis+'<div class="t">'+p.title+'</div><div class="cta">Abrir padrão ›</div></div>'
+        : '<div class="card soon"><span class="badge">em tradução</span>'+vis+'<div class="t">'+p.title+'</div><div class="cta" style="color:var(--muted)">Chegando em breve</div></div>';
     });
     html+='</div>';
   }
@@ -162,7 +167,8 @@ async function openPat(slug){
   const d=await api({email:EMAIL,action:'pattern',slug});
   if(!d.ok||!d.pattern){ $('rbook').innerHTML='<div class="loading">Não consegui abrir este padrão.</div>'; return; }
   const p=d.pattern;
-  $('rbook').innerHTML='<div class="rcat">'+p.icon+' '+p.category+'</div><h1>'+p.title+'</h1>'+(p.body_html||'<p>Conteúdo em preparação.</p>')+'<div class="print"><button class="btn" style="width:auto;padding:11px 22px" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button></div>';
+  const rcov=p.cover_url?'<img class="rcov" src="'+p.cover_url+'" alt="" onerror="this.style.display=\'none\'">':'';
+  $('rbook').innerHTML='<div class="rcat">'+p.icon+' '+p.category+'</div><h1>'+p.title+'</h1>'+rcov+(p.body_html||'<p>Conteúdo em preparação.</p>')+'<div class="print"><button class="btn" style="width:auto;padding:11px 22px" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button></div>';
 }
 $('btnBack').addEventListener('click',()=>renderList($('search').value));
 $('search').addEventListener('input',e=>renderList(e.target.value));
