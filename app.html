@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Área de Membros · Baú do Crochê</title>
+<style>
+:root{--pink:#d6336c;--pink-d:#b02556;--brown:#8a5a3b;--brown-d:#5e3b24;--cream:#fdf6ef;--card:#fff;--line:#efe3d6;--ink:#4a3528;--muted:#9b8574;--gold:#e0a458}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+img{max-width:100%;display:block}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+/* LOGIN */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,#fbe9ef,#fdf6ef)}
+.lcard{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 50px rgba(214,51,108,.14);padding:34px 28px;width:100%;max-width:410px;text-align:center}
+.logo{font-weight:900;font-size:22px;color:var(--pink);display:flex;gap:9px;align-items:center;justify-content:center}
+.logo .e{font-size:28px}
+.sub{color:var(--muted);font-size:14px;margin:6px 0 22px}
+label{display:block;text-align:left;font-weight:700;font-size:13px;margin:0 0 6px}
+input{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;outline:none}
+input:focus{border-color:var(--pink)}
+.btn{width:100%;margin-top:16px;padding:14px;background:var(--pink);color:#fff;border:0;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;transition:.15s}
+.btn:hover{background:var(--pink-d)}.btn[disabled]{opacity:.6}
+.msg{margin-top:12px;font-size:13.5px;min-height:18px}.msg.err{color:#c0392b}
+.hint{margin-top:18px;font-size:12.5px;color:var(--muted)}.hint a{color:var(--pink);font-weight:700}
+/* APP */
+#app{display:none}
+.topbar{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logout{background:#fbeaf0;border:1px solid var(--line);color:var(--pink-d);font-weight:700;font-size:13px;padding:9px 15px;border-radius:10px;cursor:pointer}
+.hero{padding:26px 0 8px}.hero h1{font-size:24px;color:var(--pink)}.hero p{color:var(--muted);font-size:14.5px;margin-top:4px}
+.tip{background:#fff7ea;border:1px solid #f0e2bf;border-radius:14px;padding:13px 16px;margin-top:14px;font-size:13.5px;color:#8a6d2f}
+.search{width:100%;margin:16px 0 4px;padding:12px 15px;border:1.5px solid var(--line);border-radius:12px;font-size:15px}
+.catname{font-weight:800;font-size:16px;color:var(--brown-d);margin:26px 0 12px;display:flex;align-items:center;gap:9px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;transition:.14s;position:relative;overflow:hidden}
+.card:hover{box-shadow:0 10px 26px rgba(214,51,108,.14);transform:translateY(-2px)}
+.card.soon{opacity:.72;cursor:default}
+.card .ic{font-size:34px;margin-bottom:8px}
+.card .t{font-weight:700;font-size:14.5px;color:var(--ink);line-height:1.3}
+.card .cta{margin-top:8px;font-size:12.5px;font-weight:800;color:var(--pink)}
+.card .badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;color:var(--gold);background:#fff6e2;padding:3px 9px;border-radius:999px}
+.loading{padding:60px;text-align:center;color:var(--muted)}
+.spin{display:inline-block;width:28px;height:28px;border:3px solid #f3dce6;border-top-color:var(--pink);border-radius:50%;animation:s 1s linear infinite}@keyframes s{to{transform:rotate(360deg)}}
+/* READER */
+#reader{display:none;padding:16px 0 70px}
+#reader .back{background:none;border:0;color:var(--pink-d);font-weight:800;font-size:14.5px;cursor:pointer;padding:10px 0;display:inline-flex;gap:6px;align-items:center}
+.rbook{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;margin-top:8px}
+.rbook .rcat{font-size:12.5px;color:var(--muted);font-weight:700;margin-bottom:6px}
+.rbook h1{font-size:26px;color:var(--pink);margin-bottom:16px}
+.pat h3{font-size:18px;color:var(--brown-d);margin:22px 0 8px;padding-top:12px;border-top:1px solid var(--line)}
+.pat p{margin:0 0 12px;font-size:15px;color:#3f2e22}
+.pat ul,.pat ol{margin:0 0 14px 20px}.pat li{margin-bottom:5px;font-size:14.5px}
+.pat ul.rnd{list-style:none;margin-left:0;background:#fdf6ef;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.pat ul.rnd li{padding:5px 0;border-bottom:1px dashed #ece0d2;font-variant-numeric:tabular-nums}
+.pat ul.rnd li:last-child{border-bottom:0}
+.pat .intro{font-size:15.5px;background:#fbeaf0;border-radius:12px;padding:12px 15px}
+.pat .abbr{font-size:13px;color:#6b5243;background:#fff7ea;border:1px solid #f0e2bf;border-radius:12px;padding:12px 14px}
+.pat .obs{color:var(--muted);font-size:13px}
+.pat .done{font-weight:800;color:#1f9d57;background:#e4f3e4;border-radius:12px;padding:12px 15px;text-align:center}
+.print{margin-top:22px}
+.wa{position:fixed;right:14px;bottom:14px;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:27px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.22);z-index:30}
+@media print{.topbar,.wa,#reader .back,.print{display:none!important}.rbook{border:0;padding:0}}
+</style>
+</head>
+<body>
+
+<section id="login">
+  <div class="lcard">
+    <div class="logo"><span class="e">🧶</span> Baú do Crochê</div>
+    <div class="sub">Área de Membros · +10.000 receitas</div>
+    <form id="loginForm">
+      <label for="email">Seu e-mail da compra</label>
+      <input id="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+      <button class="btn" id="btnLogin" type="submit">Entrar na minha biblioteca</button>
+      <div class="msg" id="loginMsg"></div>
+    </form>
+    <div class="hint">Use o <b>mesmo e-mail</b> que você usou na compra.<br>Não acha ou comprou com outro e-mail? <a id="waHelp" href="#" target="_blank">Fala com a gente</a></div>
+  </div>
+</section>
+
+<div id="app">
+  <div class="topbar"><div class="wrap">
+    <div class="logo"><span class="e">🧶</span> Baú do Crochê</div>
+    <button class="logout" id="btnLogout">Sair</button>
+  </div></div>
+  <div class="wrap">
+    <div id="list">
+      <div class="hero"><h1>Bem-vinda(o)! 👋</h1><p>Sua biblioteca de padrões de crochê e amigurumi, organizada por tema e <b>em português</b>.</p>
+        <div class="tip">💡 Os padrões marcados com <b>“em tradução”</b> estão sendo traduzidos pro português e aparecem prontos aos poucos. Comece pelos que já estão liberados!</div>
+        <input class="search" id="search" type="search" placeholder="🔎 Buscar padrão (ex.: leão, flor, dinossauro)...">
+      </div>
+      <div id="catsWrap"><div class="loading"><div class="spin"></div></div></div>
+    </div>
+    <div id="reader">
+      <button class="back" id="btnBack">← Voltar pra biblioteca</button>
+      <div class="rbook" id="rbook"></div>
+    </div>
+  </div>
+</div>
+
+<a class="wa" id="waFloat" href="#" target="_blank" title="Suporte no WhatsApp">💬</a>
+
+<script>
+const FN="https://nwpoweamwnjqbgnwpusq.supabase.co/functions/v1/croche-read";
+const ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53cG93ZWFtd25qcWJnbndwdXNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMTM1NTQsImV4cCI6MjA5NjY4OTU1NH0.X4wYz5hO-zB7Lxiy1Tl-t38Mp1n-c978L-iw7JMWYNQ";
+const WA="https://wa.me/13056849224?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20com%20o%20acesso%20ao%20Ba%C3%BA%20do%20Croch%C3%AA.";
+const $=(id)=>document.getElementById(id);
+$('waHelp').href=WA; $('waFloat').href=WA;
+let EMAIL=localStorage.getItem('bc_email')||"";
+let ALL=[];
+
+async function api(body){
+  const r=await fetch(FN,{method:'POST',headers:{'Authorization':'Bearer '+ANON,'apikey':ANON,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.json();
+}
+function show(view){ $('login').style.display=view==='login'?'flex':'none'; $('app').style.display=view==='login'?'none':'block'; }
+
+async function enter(email){
+  EMAIL=email;
+  const d=await api({email});
+  if(!d.ok){
+    if(d.error==='no_access') return {err:'Não encontramos uma compra do Baú do Crochê com esse e-mail. Confira se é o e-mail da compra.'};
+    return {err:'Não consegui entrar agora. Tente de novo em instantes.'};
+  }
+  localStorage.setItem('bc_email',email);
+  ALL=d.patterns||[];
+  show('app'); renderList('');
+  return {ok:true};
+}
+
+function renderList(q){
+  $('reader').style.display='none'; $('list').style.display='block';
+  const term=(q||'').toLowerCase();
+  const pats=ALL.filter(p=>!term || (p.title||'').toLowerCase().includes(term));
+  const cats={};
+  pats.forEach(p=>{ (cats[p.category]=cats[p.category]||[]).push(p); });
+  const order=Object.keys(cats).sort();
+  let html='';
+  if(!pats.length){ html='<div class="loading">Nenhum padrão encontrado pra "'+term+'".</div>'; }
+  for(const cat of order){
+    const ic=cats[cat][0].icon||'🧶';
+    html+='<div class="catname">'+ic+' '+cat+' <span style="color:var(--muted);font-weight:600;font-size:13px">('+cats[cat].length+')</span></div><div class="grid">';
+    cats[cat].forEach(p=>{
+      const ready=p.status==='done';
+      html+= ready
+        ? '<div class="card" data-slug="'+p.slug+'"><div class="ic">'+p.icon+'</div><div class="t">'+p.title+'</div><div class="cta">Abrir padrão ›</div></div>'
+        : '<div class="card soon"><span class="badge">em tradução</span><div class="ic">'+p.icon+'</div><div class="t">'+p.title+'</div><div class="cta" style="color:var(--muted)">Chegando em breve</div></div>';
+    });
+    html+='</div>';
+  }
+  $('catsWrap').innerHTML=html;
+  document.querySelectorAll('.card[data-slug]').forEach(el=>el.addEventListener('click',()=>openPat(el.getAttribute('data-slug'))));
+}
+
+async function openPat(slug){
+  $('list').style.display='none'; $('reader').style.display='block'; window.scrollTo(0,0);
+  $('rbook').innerHTML='<div class="loading"><div class="spin"></div></div>';
+  const d=await api({email:EMAIL,action:'pattern',slug});
+  if(!d.ok||!d.pattern){ $('rbook').innerHTML='<div class="loading">Não consegui abrir este padrão.</div>'; return; }
+  const p=d.pattern;
+  $('rbook').innerHTML='<div class="rcat">'+p.icon+' '+p.category+'</div><h1>'+p.title+'</h1>'+(p.body_html||'<p>Conteúdo em preparação.</p>')+'<div class="print"><button class="btn" style="width:auto;padding:11px 22px" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button></div>';
+}
+$('btnBack').addEventListener('click',()=>renderList($('search').value));
+$('search').addEventListener('input',e=>renderList(e.target.value));
+
+$('loginForm').addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  const email=$('email').value.trim().toLowerCase();
+  const btn=$('btnLogin'),msg=$('loginMsg');
+  btn.disabled=true;btn.textContent='Entrando...';msg.textContent='';msg.className='msg';
+  const r=await enter(email);
+  btn.disabled=false;btn.textContent='Entrar na minha biblioteca';
+  if(r&&r.err){msg.className='msg err';msg.textContent=r.err;}
+});
+$('btnLogout').addEventListener('click',()=>{ localStorage.removeItem('bc_email'); EMAIL=''; show('login'); $('email').value=''; });
+
+// auto-login se já entrou antes
+(async()=>{ if(EMAIL){ const r=await enter(EMAIL); if(!(r&&r.ok)){ show('login'); $('email').value=EMAIL; } } else { show('login'); } })();
+</script>
+</body>
+</html>
