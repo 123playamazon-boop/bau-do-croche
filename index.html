@@ -194,11 +194,11 @@ section[id]{scroll-margin-top:72px}
 <h2>Repara nessas mãos. Semana que vem, são as suas.</h2>
 <p class="muted" style="max-width:640px;margin:10px auto 22px">O fio deslizando, o pontinho fechando, o bichinho nascendo na sua mão. É isso que te espera do outro lado — não é dom, é só seguir a receita certa, carreira por carreira.</p>
 <div class="vidwall">
-<video src="v1.mp4" autoplay muted loop playsinline preload="metadata"></video>
-<video src="v2.mp4" autoplay muted loop playsinline preload="metadata"></video>
-<video src="v3.mp4" autoplay muted loop playsinline preload="metadata"></video>
-<video src="v4.mp4" autoplay muted loop playsinline preload="metadata"></video>
-<video src="v5.mp4" autoplay muted loop playsinline preload="metadata"></video>
+<video src="v1.mp4" poster="p1.webp" muted loop playsinline preload="none"></video>
+<video src="v2.mp4" poster="p2.webp" muted loop playsinline preload="none"></video>
+<video src="v3.mp4" poster="p3.webp" muted loop playsinline preload="none"></video>
+<video src="v4.mp4" poster="p4.webp" muted loop playsinline preload="none"></video>
+<video src="v5.mp4" poster="p5.webp" muted loop playsinline preload="none"></video>
 </div>
 <p class="muted" style="font-size:12.5px;margin-top:14px">Peças tecidas passo a passo com as receitas do Baú. Do primeiro ponto ao bichinho pronto. Seu resultado depende da sua própria prática.</p>
 <div style="margin-top:20px"><a class="cta" href="#planos">QUERO SENTIR ISSO →</a></div>
@@ -468,6 +468,19 @@ var k=a.getAttribute('data-checkout'); var base=CK[k]||'#planos';
 if(base.indexOf('http')===0) a.setAttribute('href', base+qs);
 a.addEventListener('click',function(){ try{ if(window.fbq) fbq('track','InitiateCheckout'); }catch(e){} });
 });
+})();
+</script>
+<script>
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('.vidwall video'));
+  if(!vids.length||!('IntersectionObserver' in window)) return;
+  vids.forEach(function(v){ v.muted=true; });
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ var v=e.target;
+      if(e.isIntersecting){ v.play().catch(function(){}); } else { v.pause(); }
+    });
+  },{threshold:0.25});
+  vids.forEach(function(v){ io.observe(v); });
 })();
 </script>
 </body></html>
