@@ -150,11 +150,10 @@ function renderList(q){
     const ic=cats[cat][0].icon||'🧶';
     html+='<div class="catname">'+ic+' '+cat+' <span style="color:var(--muted);font-weight:600;font-size:13px">('+cats[cat].length+')</span></div><div class="grid">';
     cats[cat].forEach(p=>{
-      const ready=p.status==='done';
       const vis=p.cover_url
         ? '<img class="cov" src="'+p.cover_url+'" alt="" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\'"><div class="ic" style="display:none">'+p.icon+'</div>'
         : '<div class="ic">'+p.icon+'</div>';
-      const badge = ready ? '<span class="badge" style="background:#e9f7ef;color:#1e7e4f;border-color:#bfe6cf">✓ em português</span>' : '';
+      const badge = p.pt ? '<span class="badge" style="background:#e9f7ef;color:#1e7e4f;border-color:#bfe6cf">✓ em português</span>' : '';
       html+= '<div class="card" data-slug="'+p.slug+'">'+badge+vis+'<div class="t">'+p.title+'</div><div class="cta">Abrir padrão ›</div></div>';
     });
     html+='</div>';
